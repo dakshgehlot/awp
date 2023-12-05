@@ -1218,7 +1218,648 @@ XML FILE FOR THE SAME
 
 
 
+NODE JS Random Content
+
+file server
+
+var http = require('http');
+var fs = require('fs');
+var mylog=require('./log.js');
+http.createServer(function (req, res) {
+	
+	
+  //Open a file on the server and return its content:
+ 
+  fs.readFile('app.js', function(err, data) {
+    res.writeHead(200, {'Content-Type': 'text/html'});
+   mylog.info("File Reading Started");
+    res.write(data);
+	
+    return res.end();
+  });
+	
+  
+}).listen(8080);
 
 
+calculator.js
+
+// Returns addition of two numbers
+exports.add = function (a, b) {
+    return a+b;
+}; 
+ 
+// Returns difference of two numbers
+exports.subtract = function (a, b) {
+    return a-b;
+}; 
+ 
+// Returns product of two numbers
+exports.multiply = function (a, b) {
+    return a*b;
+};
 
 
+calculator used
+
+var calculator = require('./calculator');
+ 
+var a=10, b=5;
+ 
+console.log("Addition : "+calculator.add(a,b));
+console.log("Subtraction : "+calculator.subtract(a,b));
+console.log("Multiplication : "+calculator.multiply(a,b));
+
+NodeJS express with mysql
+
+student marks
+
+index.html
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>N230</title>
+</head>
+<body>
+    <form action="/" method="post">
+        <label for="roll_no">Enter roll no: </label>
+        <input type="number" name="roll_no"> <br><br>
+        <label for="name">Enter name: </label>
+        <input type="text" name="name" id="name"><br><br>
+        <label for="sub1">Sub 1: </label>
+        <input type="number" name="sub1"><br><br>
+        <label for="sub2">Sub 2: </label>
+        <input type="number" name="sub2"><br><br>
+        <label for="sub3">Sub 3: </label>
+        <input type="number" name="sub3"><br><br>
+        <select name="operation" id="operation">
+            <option value="add">Add record</option>
+            <option value="update">Update record</option>
+            <option value="delete">Delete record</option>
+            <option value="show">Display record</option>
+        </select>
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
+
+app.js
+
+const express = require("express");
+var bodyParser = require("body-parser");
+var url = require("url");
+
+var mysql = require("mysql");
+var conn = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "",
+  database: "mydb",
+});
+const app = express();
+
+var urlencodedParser = bodyParser.urlencoded({ extended: false });
+
+app.get("/", (req, res) => {
+  res.sendFile(__dirname + "/index1.html");
+});
+
+app.post("/", urlencodedParser, (req, res) => {
+  var rollno = req.body.roll_no;
+  var name = req.body.name;
+  var sub1 = parseInt(req.body.sub1);
+  var sub2 = parseInt(req.body.sub2);
+  var sub3 = parseInt(req.body.sub3);
+  var op = req.body.operation;
+  var per = (sub1 + sub2 + sub3) / 3;
+  res.writeHead(200, { "Content-Type": "text/html" });
+
+  if (op == "add") {
+    var queryString =
+      "insert into student values('" +
+      rollno +
+      "','" +
+      name +
+      "','" +
+      sub1 +
+      "','" +
+      sub2 +
+      "','" +
+      sub3 +
+      "','" +
+      per +
+      "')";
+    conn.query(
+      queryString,
+      function (error, data) {
+        if (error) {
+          throw error;
+        } else {
+          console.log("add success");
+          res.write("insertion sucess");
+        }
+      } //end of con.query
+    );
+  } // end of if
+  else if (op == "update") {
+    var queryString =
+      "update student SET name='" +
+      name +
+      "',sub1=" +
+      sub1 +
+      ",sub2=" +
+      sub2 +
+      ",sub3=" +
+      sub3 +
+      ",per=" +
+      per +
+      " where rollno=" +
+      rollno;
+    conn.query(queryString, function (error, data) {
+      if (error) {
+        throw error;
+      } else {
+        console.log("update success");
+        res.write("update sucess");
+      }
+    });
+  } else if (op == "delete") {
+    var queryString = "delete from student where rollno=" + rollno;
+    conn.query(queryString, function (error, data) {
+      if (error) {
+        throw error;
+      } else {
+        console.log("delete success");
+        res.write("delete sucess");
+      }
+    });
+  } else if (op == "show") {
+    var reo =
+      "<html><head><title>Display Data</title></head><body><h1>Display Data</h1>{${table}}</body></html>";
+    function setResHtml(sql, cb) {
+      conn.query(sql, (err, res, cols) => {
+        if (err) throw err;
+
+        var table = ""; //to store html table
+
+        //create html table with data from res.
+        for (var i = 0; i < res.length; i++) {
+          table +=
+            "<tr><td>" +
+            (i + 1) +
+            "</td><td>" +
+            res[i].rollno +
+            "</td><td>" +
+            res[i].name +
+            "</td><td>" +
+            res[i].sub1 +
+            "</td><td>" +
+            res[i].sub2 +
+            "</td><td>" +
+            res[i].sub3 +
+            "</td><td>" +
+            res[i].per +
+            "</td></tr>";
+        }
+        table =
+          '<table border="1"><tr><th>Sr.</th><th>rollno</th><th>Name</th><th>sub1</th><th>sub2</th><th>sub3</th><th>percentage</th></tr>' +
+          table +
+          "</table>";
+
+        return cb(table);
+      });
+    }
+
+    let sql = "SELECT * FROM student";
+    setResHtml(sql, (resql) => {
+      reo = reo.replace("{${table}}", resql);
+
+      res.write(reo, "utf-8");
+    });
+  }
+  conn.end();
+});
+
+app.listen(3000);
+
+
+Mongodb stuff:
+
+var MongoClient = require('mongodb').MongoClient;
+var url = "mongodb://localhost:27017/";
+
+MongoClient.connect(url, function(err, db) {
+  if (err) throw err;
+  var dbo = db.db("mydb");
+  dbo.createCollection("customers1", function(err, res) {
+    if (err) throw err;
+    console.log("Collection created!");
+    db.close();
+  });
+});
+
+
+var MongoClient = require('mongodb').MongoClient;
+var url = "mongodb://localhost:27017/";
+MongoClient.connect(url, function(err, db) {
+  if (err) throw err;
+  var dbo = db.db("mydb");
+  var myobj = { name: "Company Inc", address: "Highway 37" };
+  dbo.collection("customers").insertOne(myobj, function(err, res) {
+    if (err) throw err;
+    console.log("1 document inserted");
+    db.close();
+  });
+});
+
+
+var MongoClient = require('mongodb').MongoClient;
+var url = "mongodb://localhost:27017/";
+
+MongoClient.connect(url, function(err, db) {
+  if (err) throw err;
+  var dbo = db.db("mydb");
+  var myquery = { address: "Valley 345" };
+  var newvalues = { $set: { name: "Michael", address: "Canyon 123" } };
+  dbo.collection("customers").updateOne(myquery, newvalues, function(err, res) {
+    if (err) throw err;
+    console.log("1 document updated");
+    db.close();
+  });
+});
+
+              
+var MongoClient = require('mongodb').MongoClient;
+var url = "mongodb://localhost:27017/";
+MongoClient.connect(url, function(err, db) {
+  if (err) throw err;
+  var dbo = db.db("mydb");
+  var myobj = { name: "Company Inc", address: "Highway 37" };
+  dbo.collection("customers").insertOne(myobj, function(err, res) {
+    if (err) throw err;
+    console.log("1 document inserted");
+    db.close();
+  });
+});
+
+
+var MongoClient = require('mongodb').MongoClient;
+var url = "mongodb://localhost:27017/";
+
+MongoClient.connect(url, function(err, db) {
+  if (err) throw err;
+  var dbo = db.db("mydb");
+  dbo.collection("customers").findOne({}, function(err, result) {
+    if (err) throw err;
+    console.log(result.name);
+    db.close();
+  });
+});
+
+
+var MongoClient = require('mongodb').MongoClient;
+var url = "mongodb://localhost:27017/";
+
+MongoClient.connect(url, function(err, db) {
+  if (err) throw err;
+  var dbo = db.db("mydb");
+  /*Delete the first customers with the address "Mountain 21":*/
+  var myquery = { address: 'Mountain 21' };
+  dbo.collection("customers").deleteOne(myquery, function(err, obj) {
+    if (err) throw err;
+    console.log("1 document deleted");
+    db.close();
+  });
+});
+
+
+MTT2 content:
+
+json:
+
+<html>
+    <script>
+        var myJson = {
+            "persons": [
+                {
+                    "name": "Daksh",
+                    "age": "18",
+                    "cars": ["bmw", "honda", "audi"]
+                },
+                {
+                    "name": "Jack",
+                    "age": "20",
+                    "cars": ["mazda", "koenigsegg", "hondo"]
+                },
+                {
+                    "name": "Daksh",
+                    "age": "18",
+                    "cars": ["maruti", "bently", "porsche"]
+                },
+            ]
+        }
+
+    function fetchJson() {
+        data = "";
+        json_data = myJson.persons;
+        for(x in myJson.persons){
+            data += json_data[x].name + "<br>" + json_data[x].age + "<br>";
+            for (y in json_data[x].cars){
+                data += json_data[x].cars[y] + " ";
+            }
+            data += "<br><br>"
+        }
+        document.getElementById('person_data').innerHTML = data;
+    }
+    </script>
+    <body>
+        <p>Load data</p>
+        <button onclick="fetchJson()">Load Data</button>
+        <p id="person_data"></p>
+    </body>
+</html>
+
+
+PHP:
+
+<html>
+    <head>
+        <script>
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange=function(){
+                var obj = JSON.parse(this.responseText);
+                data = "";
+                for(var x in obj){
+                    data += "Name:" + obj[x].name + "<br>";
+                    data += "Author:" + obj[x].author + "<br>";
+                    data += "Year:" + obj[x].year + "<br><br>";
+                }
+                document.getElementById('books').innerHTML = data;
+            }
+            xhttp.open("GET", "books.php");
+            xhttp.send();
+        </script>
+    </head>
+    <body>
+        <p>Book details:</p>
+        <p id="books"></p>
+    </body>
+</html>
+
+<?php
+
+$books = array(
+    array("name" => "Book1", "author" => "Author1", "year" => 2012),
+    array("name" => "Book2", "author" => "Author2", "year" => 2016),
+    array("name" => "Book2", "author" => "Author3", "year" => 2020)
+);
+
+header("Content-Type: application/json");
+
+echo json_encode($books);
+
+?>
+
+
+<html>
+    <head>
+        <script>
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function(){
+                if (xhttp.readyState == 4 && xhttp.status == 200){
+                    xmlDoc = this.responseXML;
+                    var data = "";
+                    books = xmlDoc.getElementsByTagName('book');
+                    for (var i=0; i < books.length; i++){
+                        data += "Title: " + books[i].getElementsByTagName('title')[0].textContent + "<br>";
+                        data += "Author: " + books[i].getElementsByTagName('author')[0].textContent + "<br>";
+                        data += "Year: " + books[i].getElementsByTagName('year')[0].textContent + "<br>";
+                        data += "Price: " + books[i].getElementsByTagName('price')[0].textContent + "<br><br>";                
+                    }
+                    document.getElementById('book_data').innerHTML = data;
+                }
+            }
+            xhttp.open("GET", "books.xml");
+            xhttp.send();
+        </script>
+    </head>
+    <body>
+        <p>Book data from xml</p>
+        <p id="book_data"></p>
+    </body>
+</html>
+
+
+<html>
+    <head>
+        <script>
+            function getCities(state) {
+                xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function(){
+                    if(xhttp.readyState == 4 && xhttp.status == 200){
+                        document.getElementById('cities').innerHTML = xhttp.responseText;
+                    }
+                }
+                xhttp.open("GET", "/q5_form_cities.php?state=" + state, true);
+                xhttp.send();
+            }
+        </script>
+    </head>
+    <body>
+        <select name="state" id="state" onchange="getCities(this.value)">
+            <option value="default">Select States</option>
+            <option value="Rajasthan">Rajasthan</option>
+            <option value="Maharashtra">Maharashtra</option>
+            <option value="Gujarat">Gujarat</option>
+        </select>
+        <select name="cities" id="cities">
+            <option value="default">Select city</option>
+        </select>
+    </body>
+</html>
+
+<?php
+$data = $_REQUEST["state"];
+$raj = array("Jodhpur", "Jaipur", "Bikaner");
+$maha = array("Mumbai", "Nashik", "Shirpur");
+$guj = array("Mehsana", "Surat", "Ahmedabad");
+
+if ($data == "Maharashtra"){
+    foreach($maha as $city){
+        echo "<option>$city</option>";
+    }
+}
+
+if ($data == "Rajasthan"){
+    foreach($raj as $city){
+        echo "<option>$city</option>";
+    }
+}
+
+if ($data == "Gujarat"){
+    foreach($guj as $city){
+        echo "<option>$city</option>";
+    }
+}
+
+?>
+
+
+<html>
+    <head>
+        <script>
+            function getStreams(program){
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function(){
+                    if(xhttp.readyState == 4 && xhttp.status == 200){
+                        document.getElementById('stream').innerHTML = xhttp.responseText;
+                    }
+                }
+                xhttp.open("GET", "/q6_student_form.php?program=" + program, true);
+                xhttp.send();
+            }
+        </script>
+    </head>
+    <body>
+        <label for="">Name:</label>
+        <input type="text"><br><br>
+
+        <label for="">Age</label>
+        <input type="text"><br><br>
+
+        <select name="program" id="program" onchange="getStreams(this.value)">
+            <option>Select program</option>
+            <option>mba</option>
+            <option>btech</option>
+        </select>
+        <br><br>
+
+        <select name="stream" id="stream">
+            <option>Select stream</option>
+        </select>
+    </body>
+</html>
+
+
+<?php
+
+$program = $_REQUEST["program"];
+$MBATech = array("DS", "CE", "IT");
+$BTech = array("CS", "AIML", "CE");
+
+if ($program == "mba"){
+    foreach($MBATech as $stream){
+        echo "<option>$stream</option>";
+    }
+}
+if ($program == "btech"){
+    foreach($BTech as $stream){
+        echo "<option>$stream</option>";
+    }
+}
+
+?>
+
+
+<html>
+
+<body>
+	<div style="border:1px solid red;width:200px;height:200px" id="cust">
+	</div>
+	<br>
+	<input type="button" onclick="display()" value="GetDetails" />
+	<script>
+		function display() {
+			alert();
+			var req = new XMLHttpRequest();
+			req.open("GET", "customer.php", true);
+			req.send();
+			req.onreadystatechange = function () {
+				if (req.readyState == 4 && req.status == 200) {
+					alert("inside if");
+					//document.write(req.ResponseText);
+					document.getElementById("cust").innerHTML = req.responseText;
+				}
+			}
+
+		}
+
+	</script>
+</body>
+
+</html>
+
+
+<?php 
+$con=new mysqli("localhost","root","rick@astley","world");
+if(!$con)
+{
+	die("Connection failed".mysqli_connect_error());
+	
+	
+}
+$str="select * from country";
+$result=mysqli_query($con,$str);
+
+
+while($row=mysqli_fetch_array($result))
+{ 
+
+	echo  $row[0].$row[1].$row[2]."<br>";
+	
+}
+mysqli_close($con);
+?>
+
+
+<html>
+
+<body>
+	Empid&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" id="t1" /><br><br>
+	EmpName&nbsp;&nbsp;<input type="text" id="t2" /><br><br>
+	Department&nbsp;&nbsp;<input type="text" id="t3" /><br><br>
+	<h1 id="t4"></h1>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="button" onclick="insert()" value="InsertDB" />
+	<script>
+		function insert() {
+			alert();
+			var empid = document.getElementById("t1").value;
+			var empname = document.getElementById("t2").value;
+			var Dept = document.getElementById("t3").value;
+			var record = [empid, empname, Dept];
+			var req = new XMLHttpRequest();
+			req.open("GET", "empinsert.php?key=" + record, true);
+			req.send();
+			req.onreadystatechange = function () {
+				if (req.readyState == 4 && req.status == 200) {
+					document.getElementById("t4").innerHTML = req.responseText;
+				}
+
+			}
+		}
+	</script>
+
+	<body>
+
+</html>
+
+<?php 
+$data=$_REQUEST['key'];
+$URLData=explode(",",$data);
+
+//Creating Database connection
+$con= new mysqli("localhost","root","","master");
+if(!$con)
+{
+		die("Connection Failed".mysqli_connect_error());
+}
+$sql="insert into employee(empid,name,Department)values('$URLData[0]','$URLData[1]','$URLData[2]')";
+if(mysqli_query($con,$sql))
+{
+	echo "Record is inserted";
+}
+?>
