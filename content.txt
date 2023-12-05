@@ -1,0 +1,1224 @@
+//COLOR_CHANGE
+
+<!DOCTYPE html>
+<html lang="en" ng-app="">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <style>body {background-color: {{color}};}</style>
+</head>
+<body>
+    <input type="text" ng-model="color"><br>
+    The text that you Entered: {{color}}
+    <br><br>
+    <select ng-model="color">
+        <option>aqua</option>
+        <option>purple</option>
+        <option>Yellow</option>
+        <option>DarkGray</option>
+    </select>
+</body>
+</html>
+
+
+//FORM_VALIDATION
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User ID Validation</title>
+    <style>
+        body{background-color: rgb(50, 72, 72);}
+        form{background-color: rgb(54, 48, 41)0, 83, 62);}
+    </style>
+</head>
+<body>
+    <form id="userForm">
+        <label for="userID">User ID:</label>
+        <input type="text" id="userID" name="userID" required pattern="A.*" title="User ID must start with 'A'">
+        <br> 
+        <br>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required pattern="[a-zA-Z0-9]+" title="Password should be alphanumeric">
+        <br>
+        <br>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+        <br>
+        <br>
+        <label for="phoneNumber">Phone Number:</label>
+        <input type="tel" id="phoneNumber" name="phoneNumber" required pattern="[0-9]{10}" title="Please enter a valid 10-digit phone number">
+        <br>
+        <br>
+        <input type="submit" value="Submit">
+      </form>
+</body>
+</html>
+
+
+//CHOOSE_OPTION_NAVIGATE_BAR
+
+<!DOCTYPE html>
+<head> 
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="JS/offline.js"></script> 
+<style>
+  body{
+    background-color: rgb(68, 67, 67);
+  }
+ul {
+    list-style-type:none;
+  }
+   li {
+    float: left;
+    width: 100px;
+    padding: 15px;
+    background-color: lightskyblue;
+    border: 1px solid lightblue;
+    text-align: left;
+    color: white;
+  }
+  li a:hover{
+  background-color:rgb(251, 218, 3);
+  }
+  </style>
+  </head>
+<body ng-app="">
+    <ul>
+      <li><a ng-click="active='Home'"> <b> HOME </b> </a></li>
+      <li><a ng-click="active='Project'"> <b> PROJECT </b> </a></li>
+      <li><a ng-click="active='Services'"> <b> SERVICES  </b> </a></li>
+      <li><a ng-click="active='Contact'"> <b> CONTACT </b> </a></li>
+    </ul>
+     <br><br><br><br><br><br>
+    <p>
+       {{"Your Choose: " +  active}}</p>
+</body>
+</html>
+
+
+//WRITE text
+
+
+<!DOCTYPE html>
+<html lang="en" ng-app="">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="JS/offline.js"></script>
+    <style>
+        body{background-color: beige;}
+    </style>
+</head>
+<body>
+    Type your Favourite Game in The given Area:
+    <br>
+    Game Name:
+    <input type="text" ng-model="game"><br>
+    {{"Your Favourite Game is: " + game}}
+</body>
+</html>
+
+
+
+//SELECT Course
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Document</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+</head>
+<style>
+    th,td,table{border: 2px solid darkslategrey;border-radius: 3px; border-collapse: collapse; background-color: aqua;}
+    .default{background-color: lightcoral;}
+    .after{background-color: greenyellow;}
+</style>
+<body>
+    <div ng-app="app" ng-controller="ctrl">
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Credit</th>
+            <th>Add</th>
+        </tr>
+        <tr ng-repeat="x in student">
+            <td>{{x.name}}</td>
+            <td ng-model="trial">{{x.Credit}}</td>
+            <td><button ng-click="pra(trial)" class="{{clas}}">Select Course</button></td>
+        </tr>
+    </table>
+    You Selected:{{count}} 
+    total:{{triasl}}
+</body>
+<script>
+    app=angular.module("app" ,[])
+    app.controller("ctrl",function($scope){
+        $scope.clas="default";
+        $scope.count=0;
+        $scope.student=[{name: "Physics",Credit: 3},{name: "Chemistry",Credit: 2}]
+        $scope.pra = function(x)
+        {
+            $scope.clas = "after";
+            $scope.count=$scope.count+1;
+            $scope.trials=$scope.trials+$scope.trial;
+        }
+    });
+</script>
+</html>
+
+
+//SORTING table
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <style>
+        th,td,table{border: 2px solid black; border-radius: 5px; border-collapse: collapse;}
+        th{background-color: lightcoral;}
+    </style>
+</head>
+<body ng-app="myapp" ng-controller="ctrl">
+    <label>Sort:</label>
+    <select ng-model="selection">
+        <option value="">Select operation</option>
+        <option value="+name">ASC Name</option>
+        <option value="-name">DSC Name</option>
+        <option value="+DOB">ASC DOB</option>
+        <option value="-Salary">DSC Salary</option>
+        <option value="+gender">ASC Gender</option>
+    </select>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>DOB</th>
+                <th>Gender</th>
+                <th>Salary</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="x in employee | orderBy: selection">
+                <td>{{x.name}}</td>
+                <td>{{x.DOB | date:dd/MM/yyyy}}</td>
+                <td>{{x.Gender}}</td>
+                <td>{{x.Salary}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <script>
+        app = angular.module("myapp", []);
+        app.controller("ctrl", function($scope) {
+            $scope.employee = [
+                { name: "Ram", DOB: new Date("7-08-2001"), Gender: "Male", Salary: 2000 },
+                { name: "Krishna", DOB: new Date("4-10-2003"), Gender: "Male", Salary: 16000 },
+                { name: "Ritu", DOB: new Date("12-04-2000"), Gender: "Female", Salary: 5000 }
+            ];
+        });
+    </script>
+</body>
+</html>
+
+//STATIONERY
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script>
+</head>
+<style>
+    div {
+        background-color: aqua;
+        width: 200px;
+        height: 200px;
+        border: 1px;
+        border-color: darkgray;
+        border-radius: 10px;
+    }
+
+    span {
+        color: red;
+    }
+
+    ul {
+        list-style-type: disc;
+    }
+</style>
+
+<body>
+    <div ng-app="cartApp" ng-controller="ctrl">
+        <p ng-init="list = ['Pen', 'Eraser', 'Sharpener', 'Ruler']"></p>
+        <ul>
+            <li ng-repeat="x in list">
+                {{x}}
+                <span ng-click="rem($index)">X</span>
+            </li>
+        </ul>
+        <input type="text" ng-model="new">
+        <input type="button" ng-click="add()" value="AddToCart">
+    </div>
+</body>
+<script>
+    var A = angular.module("cartApp", []);
+    A.controller("ctrl", function ($scope) {
+        $scope.add = function () {
+            $scope.list.push($scope.new);
+        }
+        $scope.rem = function (x) {
+            $scope.list.splice(x, 7);
+        }
+    });
+</script>
+
+</html>
+
+
+//FORM VALID
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Document</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+  <style>
+    table,th,td{border: 2px solid black; border-collapse: collapse ;}
+    body {
+      background-color: #d4d9df; 
+    }
+    form {
+      background-color: aqua; 
+      width: 400px;
+      margin: 0 auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .maintab {
+      background-color: #ffffff; 
+      margin-top: 20px;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    div {
+      color: red;
+      font-style: italic;
+      margin-top: 5px;
+    }
+    input.ng-invalid {
+      background-color: #ffbcbc; 
+    }
+  </style>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+</head>
+<body ng-app="myApp" ng-controller="myCtrl">
+  <form align="center" name="myForm" class="registration-form">
+    <h1>REGISTRATION FORM</h1>
+    <input type="text" placeholder="First Name" ng-model="ffname" name="fname" required ng-minlength="3" ng-maxlength="7" class="ng-invalid" />
+    <div class="error-message" ng-show="myForm.fname.$touched && myForm.fname.$error.required">Please Enter First Name</div>
+    <div class="error-message" ng-show="myForm.fname.$touched && myForm.fname.$error.minlength">Username too small</div>
+    <div class="error-message" ng-show="myForm.fname.$touched && myForm.fname.$error.maxlength">Username too long</div>
+
+    <input type="text" placeholder="Last Name" ng-model="lname" required name="lname">
+    <div class="error-message" ng-show="myForm.lname.$touched && myForm.lname.$error.required">Please Enter Last Name</div>
+
+    <input type="email" placeholder="Email" ng-model="email" required name="email">
+    <div class="error-message" ng-show="myForm.email.$touched && myForm.email.$error.required">Please Enter Email</div>
+    <div class="error-message" ng-show="myForm.email.$touched && myForm.email.$error.email">Please Enter Valid Email</div>
+
+    <input type="password" placeholder="Password" ng-model="pwd" required pattern="[a-zA-Z0-9]+" title="Enter Valid Password">
+    <input type="tel" placeholder="Phone" ng-model="phone" ng-minlength="10" ng-maxlength="10" name="phone" required>
+    <div class="error-message" ng-show="myForm.phone.$touched && myForm.phone.$error.required">Please Enter Phone No</div>
+    <div class="error-message" ng-show="myForm.phone.$touched && (myForm.phone.$error.minlength || myForm.phone.$error.maxlength)">Please Enter Valid Phone No</div>
+    <div id="buttons">
+      <button type="button" class="btn btn-success" ng-click="Add()">SUBMIT</button>
+      <button type="button" class="btn btn-danger" ng-click="clear()">CANCEL</button>
+    </div>
+  </form>
+  <div class="maintab">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <td>First Name</td>
+          <td>Last Name</td>
+          <td>Email</td>
+          <td>Phone No.</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="x in data">
+          <td>{{x.fname}}</td>
+          <td>{{x.lname}}</td>
+          <td>{{x.email}}</td>
+          <td>{{x.phone}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <script>
+    app = angular.module('myApp', []);
+    app.controller('myCtrl', function ($scope) {
+      $scope.data = [
+        { fname: null, lname: null, email: null, phone: null },
+      ];
+      $scope.Add = function () {
+        $scope.data.push({
+          fname: $scope.ffname,
+          lname: $scope.lname,
+          email: $scope.email,
+          phone: $scope.phone
+        });
+      };
+      $scope.clear = function(){
+        $scope.fname = null;
+        $scope.lname = null;
+        $scope.email = null;
+        $scope.pwd = null;
+        $scope.phone = null;
+      };
+    });
+  </script>
+</body>
+</html>
+
+
+
+//CALCULATOR
+
+<!DOCTYPE html>
+<html ng-app="myApp">
+
+<head>
+    <title>Experiment 5.1</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+</head>
+<body>
+    <div ng-controller="myController">
+        <h1>Math Operations</h1>
+        <input type="number" ng-model="num1" placeholder="Enter first number"> <br> <br>
+        <input type="number" ng-model="num2" placeholder="Enter second number"> <br> <br>
+        <select ng-model="operation">
+            <option value="add">Addition</option>
+            <option value="subtract">Subtraction</option>
+            <option value="multiply">Multiplication</option>
+            <option value="divide">Division</option>
+        </select> <br> <br>
+        <button ng-click="calculate()">Calculate</button>
+        <p ng-if="result">Result: {{ result }}</p>
+    </div>
+    <script>
+        var app = angular.module('myApp', []);
+        app.controller('myController', function($scope) {
+            $scope.calculate=function(){
+            if($scope.operation=='add'){
+                $scope.result=$scope.num1+$scope.num2;
+            }
+            if($scope.operation=='subtract'){
+                $scope.result=$scope.num1-$scope.num2;
+            } 
+            if($scope.operation=='multiply'){
+                $scope.result=$scope.num1*$scope.num2;
+            }
+            if($scope.operation=='divide'){
+                $scope.result=$scope.num1/$scope.num2;
+            }}
+            });
+    </script>
+</body>
+</html>
+
+
+CALCULATOR 2
+
+<!DOCTYPE html>
+<html ng-app="myApp">
+
+<head>
+    <title>Experiment 5.1</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+</head>
+<body>
+    <div ng-controller="myController">
+        <h1>Math Operations</h1>
+        <input type="number" ng-model="num1" placeholder="Enter first number"> <br> <br>
+        <input type="number" ng-model="num2" placeholder="Enter second number"> <br> <br>
+        <select ng-model="operation">
+            <option value="add">Addition</option>
+            <option value="subtract">Subtraction</option>
+            <option value="multiply">Multiplication</option>
+            <option value="divide">Division</option>
+        </select> <br> <br>
+        <button ng-click="calculate()">Calculate</button>
+        <p ng-if="result">Result: {{ result }}</p>
+    </div>
+    <script>
+        var app = angular.module('myApp', []);
+        app.factory('MathService', function() {
+            var factory = {};
+
+            factory.calculate = function(num1, num2, operation) {
+                switch (operation)
+                 {
+                    case 'add':
+                        return num1 + num2;
+                    case 'subtract':
+                        return num1 - num2;
+                    case 'multiply':
+                        return num1 * num2;
+                    case 'divide':
+                        return num2 !== 0 ? num1 / num2 : 'Cannot divide by zero';
+                    default:
+                        return 'Invalid operation';
+                }
+            };
+            return factory;
+        });
+        app.controller('myController', function($scope, MathService) {
+            $scope.operation = 'add';
+            $scope.calculate = function() {
+                $scope.result = MathService.calculate($scope.num1, $scope.num2, $scope.operation);
+            };
+        });
+    </script>
+</body>
+</html>
+
+
+
+//INCOME TAX CALCULATOR
+
+<!DOCTYPE html>
+<html ng-app="taxCalculatorApp">
+
+<head>
+    <title>Exp-5.3</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        
+        .calculator {
+            border: 1px solid #ccc;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+        
+        .calculator h1 {
+            margin-top: 0;
+        }
+        
+        .calculator label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        .calculator input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+        
+        .calculator button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .calculator button:hover {
+            background-color: #45a049;
+        }
+        
+        .calculator h2 {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div ng-controller="TaxCalculatorController" class="calculator">
+        <h1>Income Tax Calculator</h1>
+
+        <label for="employeeName">Employee Name:</label>
+        <input type="text" id="employeeName" ng-model="employeeName">
+
+        <label for="grossIncome">Gross Total Income:</label>
+        <input type="number" id="grossIncome" ng-model="grossIncome">
+
+        <label for="deduction">Deduction (Investments, up to 1.5 lakhs):</label>
+        <input type="number" id="deduction" ng-model="deduction">
+
+        <button ng-click="calculateTax()">Calculate Tax</button>
+
+        <h2>Calculated Tax:</h2>
+        <p>{{ taxAmount }}</p>
+    </div>
+
+    <script>
+        var app = angular.module('taxCalculatorApp', []);
+
+        app.controller('TaxCalculatorController', function($scope) {
+            $scope.taxAmount = 0;
+
+            $scope.calculateTax = function() {
+                var grossIncome = $scope.grossIncome || 0;
+                var deduction = $scope.deduction || 0;
+                var netTaxableIncome = grossIncome - Math.min(deduction, 150000) - 50000;
+
+                if (netTaxableIncome <= 250000) {
+                    $scope.taxAmount = 0;
+                } else if (netTaxableIncome <= 500000) {
+                    $scope.taxAmount = netTaxableIncome * 0.05;
+                } else if (netTaxableIncome <= 1000000) {
+                    $scope.taxAmount = netTaxableIncome * 0.2;
+                } else {
+                    $scope.taxAmount = netTaxableIncome * 0.3;
+                }
+            };
+        });
+    </script>
+</body>
+
+</html>
+
+
+
+//SELECT FROM LIST
+<html>
+    <body>
+        <p id="demo"></p>
+        <p id="demo1"></p>
+        <script>
+            person={
+                name:"Mike",age:32, car:["BMW","HONDA","FIAT"]
+            };
+            str = JSON.stringify(person)
+            document.getElementById("demo").innerHTML = str;
+            obj=JSON.parse(str)
+            document.getElementById("demo1").innerHTML = obj.name;
+            for(i in obj.car)
+            {
+                document.write(obj.car[i]+"<br>");
+            }
+            </script>
+    </body>
+</html>
+
+
+
+//CODE TO LOAD XML FILE
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>XML Parsing with AJAX</title>
+</head>
+<body>
+<h1>XML Parsing with AJAX</h1>
+   <button onclick="loadXMLDoc()">Load XML File</button>
+   <div id="xml-content"></div>
+   <script>
+        function loadXMLDoc() {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState === 4 && this.status === 200) {
+                    parseXML(this);
+                }
+            };
+            xhttp.open("GET", "example.xml", true); // Change "example.xml" to your XML file path
+            xhttp.send();
+        }
+     function parseXML(xml) {
+            var xmlDoc = xml.responseXML;
+            var output = "<ul>";
+            var books = xmlDoc.getElementsByTagName("book");
+            for (var i = 0; i < books.length; i++) {
+                var title = books[i].getElementsByTagName("title")[0].childNodes[0].nodeValue;
+                var author = books[i].getElementsByTagName("author")[0].childNodes[0].nodeValue;
+                var genre = books[i].getElementsByTagName("genre")[0].childNodes[0].nodeValue;
+                var price = books[i].getElementsByTagName("price")[0].childNodes[0].nodeValue;
+                var publishDate = books[i].getElementsByTagName("publish_date")[0].childNodes[0].nodeValue;
+                var description = books[i].getElementsByTagName("description")[0].childNodes[0].nodeValue;
+
+ 
+
+                output += "<li><strong>Title:</strong> " + title + "<br>";
+                output += "<strong>Author:</strong> " + author + "<br>";
+                output += "<strong>Genre:</strong> " + genre + "<br>";
+                output += "<strong>Price:</strong> " + price + "<br>";
+                output += "<strong>Publish Date:</strong> " + publishDate + "<br>";
+                output += "<strong>Description:</strong> " + description + "<br></li><br>";
+            }
+
+ 
+
+            output += "</ul>";
+
+ 
+
+            document.getElementById("xml-content").innerHTML = output;
+        }
+</script>
+</body>
+</html>
+
+
+
+XAMPP CONNECTIVITY CODE FOR PHP FILE SELECT COURSE
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Btech MBA Tech Form Selection</title>
+</head>
+<body>
+    
+    <form>
+        Username: <input type="text" id="t1"><br>
+        Password: <input type="text" id="t2"><br>
+        Degree: <select id="degree" onchange="myfun(this.value)">
+            <option>Select your degree</option>
+            <option value="btech">B Tech</option>
+            <option value="mbatech">MBA Tech</option>
+        </select><br>
+
+        Course: <select id="course"></select><br>
+        <button type="button" onclick="info()">SUBMIT</button>
+    </form>
+    <p id="demo"></p>
+
+    <script type="text/javascript">
+        function myfun(data){
+            
+            var req =new XMLHttpRequest();
+            req.open("GET", "btechmba.php?datavalue=" + data, true)
+            req.send();
+            req.onreadystatechange=function(){
+                if(req.readyState==4 && req.status==200){
+                    
+                    document.getElementById('course').innerHTML=req.responseText;
+                }
+            }
+
+        }
+        function info(){
+            var uname=document.getElementById('t1').value;
+            var pass=document.getElementById('t2').value;
+            var degree=document.getElementById('degree').value;
+            var course=document.getElementById('course').value;
+
+            document.getElementById('demo').innerHTML= "USERNAME: "+ uname + "<br>" + "PASSWORD: "+ pass + "<br>" 
+            + "DEGREE: "+ degree + "<br>" + "COURSE: "+ course + "<br>" ;
+        }
+
+    </script>
+</body>
+</html>
+
+
+
+
+//PHP FILE FOR ABOVE CODE
+
+
+
+<?php
+
+$data= $_REQUEST['datavalue'];
+$b= array("ML", "Networking", "CSS");
+$m = array("Finance", "Operations", "Marketing", "Business Intelligence");
+
+if($data == "btech")
+{
+    foreach($b as $one){
+        echo "<option>$one</option>";
+    }
+}
+
+if($data == "mbatech"){
+    foreach($m as $one)
+    {
+        echo "<option>$one</option>";
+    }
+}
+
+?>
+
+//GET DETAILS FROM XAMPP SERVER
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Running an SQL query</title>
+</head>
+<body>
+    <div id="demo"></div>
+    <button onclick="display()">GET DETAILS</button>
+    <script>
+        function display(){
+            req = new XMLHttpRequest();
+            req.open("GET", "dbtry.php", open);
+            req.send();
+            req.onreadystatechange = function(){
+                if(req.readyState==4 && req.status==200){
+                    document.getElementById('demo').innerHTML=req.responseText;
+                }
+            }
+        }
+    </script>
+</body>
+</html>
+
+PHP CODE FOR ABOVE FILE
+
+<?php
+$con = new mysqli("localhost", "root", "", "master");
+if (!$con) {
+    die("Connection Failed" . mysqli_connect_error());
+}
+$str = "select * from student";
+$result = mysqli_query($con, $str);
+while ($row = mysqli_fetch_array($result)) {
+    echo $row[0] . " " . $row[1] . " " . $row[2] . " " . $row[3] . "<br>"; // Use <br> for a new line
+}
+mysqli_close($con);
+?>
+ 
+
+
+//CALCULATE PERCENTAGE CODE 
+
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+    <title>Student Details</title> 
+</head>
+<script>
+    const express = require('express');
+const bodyParser = require('body-parser');
+const app = express();
+
+// Configure body-parser to handle form data
+const urlencodedParser = bodyParser.urlencoded({ extended: false });
+
+app.get('/', (req, res) => {
+  res.sendFile(__dirname + '/index.html');
+});
+
+app.post('/', urlencodedParser, (req, res) => {
+  // Get form data
+  const rollNumber = req.body.roll_number;
+  const firstName = req.body.first_name;
+  const lastName = req.body.last_name;
+  const subject1 = parseFloat(req.body.subject1);
+  const subject2 = parseFloat(req.body.subject2);
+  const subject3 = parseFloat(req.body.subject3);
+
+  // Calculate percentage
+  const totalMarks = subject1 + subject2 + subject3;
+  const percentage = (totalMarks / 300) * 100;
+
+  // Display student details
+  res.send(`
+    <h2>Student Details</h2>
+    <p>Roll Number: ${rollNumber}</p>
+    <p>First Name: ${firstName}</p>
+    <p>Last Name: ${lastName}</p>
+    <p>Marks for Subject 1: ${subject1}</p>
+    <p>Marks for Subject 2: ${subject2}</p>
+    <p>Marks for Subject 3: ${subject3}</p>
+    <p>Total Marks: ${totalMarks}</p>
+    <p>Percentage: ${percentage.toFixed(2)}%</p>
+  `);
+});
+
+app.listen(3000, () => {
+  console.log('Server is running on port 3000');
+});
+
+</script>
+<body> 
+    <div class="container"> 
+        <h1>Student Details</h1> 
+        <form action="/" method="POST"> 
+            <div> 
+                <label>Roll Number</label> 
+                <input type="text" name="roll_number"> 
+            </div> 
+            <div> 
+                <label>First Name</label> 
+                <input type="text" name="first_name"> 
+            </div> 
+            <div> 
+                <label>Last Name</label> 
+                <input type="text" name="last_name"> 
+            </div> 
+            <div> 
+                <label>Marks for Subject 1</label> 
+                <input type="number" name="subject1"> 
+            </div> 
+            <div> 
+                <label>Marks for Subject 2</label> 
+                <input type="number" name="subject2"> 
+            </div> 
+            <div> 
+                <label>Marks for Subject 3</label> 
+                <input type="number" name="subject3"> 
+            </div> 
+            <button type="submit" name="submit">Calculate Percentage</button> 
+        </form> 
+    </div> 
+</body> 
+</html>  
+ 
+JS FORMAT FILE FOR ABOVE CODE(App.js)
+
+
+const express = require('express');
+const bodyParser = require('body-parser');
+const app = express();
+
+// Configure body-parser to handle form data
+const urlencodedParser = bodyParser.urlencoded({ extended: false });
+
+app.get('/', (req, res) => {
+  res.sendFile(__dirname + '/index.html');
+});
+
+app.post('/', urlencodedParser, (req, res) => {
+  // Get form data
+  const rollNumber = req.body.roll_number;
+  const firstName = req.body.first_name;
+  const lastName = req.body.last_name;
+  const subject1 = parseFloat(req.body.subject1);
+  const subject2 = parseFloat(req.body.subject2);
+  const subject3 = parseFloat(req.body.subject3);
+
+  // Calculate percentage
+  const totalMarks = subject1 + subject2 + subject3;
+  const percentage = (totalMarks / 300) * 100;
+
+  // Display student details
+  res.send(`
+    <h2>Student Details</h2>
+    <p>Roll Number: ${rollNumber}</p>
+    <p>First Name: ${firstName}</p>
+    <p>Last Name: ${lastName}</p>
+    <p>Marks for Subject 1: ${subject1}</p>
+    <p>Marks for Subject 2: ${subject2}</p>
+    <p>Marks for Subject 3: ${subject3}</p>
+    <p>Total Marks: ${totalMarks}</p>
+    <p>Percentage: ${percentage.toFixed(2)}%</p>
+  `);
+});
+
+app.listen(3000, () => {
+  console.log('Server is running on port 3000');
+});
+
+
+//NODE JS CODE RUN IN NOTEPAD++
+
+
+Create Database
+var mysql = require('mysql');
+ 
+var con = mysql.createConnection({
+host: "localhost",
+user: "yourusername",
+password: "yourpassword"
+});
+ 
+con.connect(function(err) {
+ if (err) throw err;
+console.log("Connected!");
+con.query("CREATE DATABASE mydb", function (err, result) {
+  if (err) throw err;
+  console.log("Database created");
+ });
+});
+ 
+Create Table
+var mysql = require('mysql');
+ 
+var con = mysql.createConnection({
+host: "localhost",
+user: "yourusername",
+password: "yourpassword",
+database: "mydb"
+});
+ 
+con.connect(function(err) {
+ if (err) throw err;
+console.log("Connected!");
+ var sql = "CREATE TABLE customers (name VARCHAR(255), address VARCHAR(255))";
+con.query(sql, function (err, result) {
+  if (err) throw err;
+  console.log("Table created");
+ });
+});
+ 
+Table Insertion
+var mysql = require('mysql');
+ 
+var con = mysql.createConnection({
+host: "localhost",
+user: "yourusername",
+password: "yourpassword",
+database: "mydb"
+});
+ 
+con.connect(function(err) {
+ if (err) throw err;
+console.log("Connected!");
+ var sql = "INSERT INTO customers (name, address) VALUES ('Company Inc', 'Highway 37')";
+con.query(sql, function (err, result) {
+  if (err) throw err;
+  console.log("1 record inserted");
+ });
+});
+ 
+Select from the table
+var mysql = require('mysql');
+ 
+var con = mysql.createConnection({
+host: "localhost",
+user: "yourusername",
+password: "yourpassword",
+database: "mydb"
+});
+ 
+con.connect(function(err) {
+ if (err) throw err;
+con.query("SELECT * FROM customers", function (err, result, fields) {
+  if (err) throw err;
+  console.log(result);
+ });
+});
+ 
+Update the table
+var mysql = require('mysql');
+ 
+var con = mysql.createConnection({
+host: "localhost",
+user: "yourusername",
+password: "yourpassword",
+database: "mydb"
+});
+ 
+con.connect(function(err) {
+ if (err) throw err;
+ var sql = "UPDATE customers SET address = 'Canyon 123' WHERE address = 'Valley 345'";
+con.query(sql, function (err, result) {
+  if (err) throw err;
+  console.log(result.affectedRows + " record(s) updated");
+ });
+});
+ 
+Delete from the table
+var mysql = require('mysql');
+ 
+var con = mysql.createConnection({
+host: "localhost",
+user: "yourusername",
+password: "yourpassword",
+database: "mydb"
+});
+ 
+con.connect(function(err) {
+ if (err) throw err;
+ var sql = "DELETE FROM customers WHERE address = 'Mountain 21'";
+con.query(sql, function (err, result) {
+  if (err) throw err;
+  console.log("Number of records deleted: " + result.affectedRows);
+ });
+});
+ 
+Example to insert record into the database table (GUI based)
+var url = require("url");
+const express = require('express');
+var bodyParser = require('body-parser')
+var mysql = require('mysql');
+var conn=mysql.createConnection({
+host : "localhost",
+user : "root",
+password : "",
+database : "mydb"
+}
+);
+const app = express();
+var urlencodedParser = bodyParser.urlencoded({ extended: false })
+ 
+app.get('/', (req, res) => {
+res.sendFile(__dirname + '/input.html');
+});
+  
+app.post('/', urlencodedParser, (req, res) => {
+var address=req.body.address;
+           var name=req.body.name;
+res.writeHead(200, {"Content-Type": "text/html"});
+ 
+var queryString="insert into customer values('"+name+"','"+address+"')";
+conn.query(queryString, function(error,data,fields)
+{
+if(error)
+{
+throw error;
+}
+else{
+ 
+console.log("success");
+}
+}
+)
+conn.end();
+ 
+res.write("insertion success");
+});
+ 
+ 
+ 
+app.listen(3000);
+console.log("Server has started.");
+
+
+
+
+//MONGO DB COMMANDS
+
+use dbs
+db.createCollection('table')
+db.table.insertOne({'name':'xyz','roll':01})
+db.table.find()
+db.collection.remove()
+db.products.remove( { qty: { $gt: 20 } } )
+db.collection.drop( { writeConcern: <document> } )
+    db.collection.deleteMany(
+   <filter>,
+   {
+      writeConcern: <document>,
+      collation: <document>
+   }
+)
+
+
+
+
+
+
+//XML BOOK.HTML
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AJAX with XML </title>
+</head>
+<body>
+    <p id="title"></p>
+    <p id="author"></p>
+    <p id="price"></p>
+
+    <script>
+        req= new XMLHttpRequest();
+        req.open("GET", "xmlbook.xml", true);
+        req.send();
+        req.onreadystatechange= function(){
+            if(req.readyState== 4 && req.status== 200)
+            {
+                xmlLoad(this);
+            }
+        }
+        function xmlLoad(xml){
+            xmlDoc= xml.responseXML;
+            var txt1= "";
+            var txt2= "";
+            var txt3= "";
+            var a= xmlDoc.getElementsByTagName('title');
+            var b= xmlDoc.getElementsByTagName('author');
+            var c= xmlDoc.getElementsByTagName('price');
+
+            for(i=0; i < a.length; i++){
+                txt1+= a[i].childNodes[0].nodeValue + "<br>";
+            }
+            for(i=0; i<b.length; i++){
+                txt2+= b[i].childNodes[0].nodeValue + "<br>";
+            }
+            for(i=0; i<c.length; i++){
+                txt3+= c[i].childNodes[0].nodeValue+ "<br>";
+            }
+        
+        document.getElementById('title').innerHTML= txt1;
+        document.getElementById('author').innerHTML= txt2;
+        document.getElementById('price').innerHTML= txt3;
+        }
+    </script>
+</body>
+</html>
+
+
+XML FILE FOR THE SAME
+
+<?xml version = "1.0" encoding = "UTF-8"?>
+<bookstore>
+    <book category="Computer">
+        <title>Web Programming</title>
+        <author>Raj Mehta</author>
+        <price>1000</price>
+    </book>
+    <book category="Networking">
+        <title>Ethernet</title>
+        <author>Yash Kundra</author>
+        <price>1250</price>
+    </book>
+    <book category="Computer">
+        <title>Web Designing</title>
+        <author>Usha Lohar</author>
+        <price>780</price>
+    </book>
+    
+</bookstore>
+
+
+
+
+
+
+
